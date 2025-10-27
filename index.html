@@ -1,66 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Assistant</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>L'Oréal — Smart Product Advisor</title>
+
+    <!-- Recommended typographic pairing:
+         Heading: Playfair Display (serif) to convey luxury
+         Body: Montserrat + system sans as fallback for clarity -->
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Playfair+Display:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
-      rel="stylesheet"
-    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="page-wrapper">
-      <!------- Header / Branding ------->
-      <header class="site-header">
-        <h1 class="site-title">Smart Product Advisor</h1>
+      <header class="topbar">
+        <img id="loreal-logo" src="img/loreal-logo.png" alt="L'Oréal" />
+        <div class="brand-meta">
+          <h1 class="site-title">Smart Product Advisor</h1>
+          <p class="site-sub">
+            Personalized L’Oréal product & routine recommendations
+          </p>
+        </div>
       </header>
 
-      <!------- Chat Area ------->
-      <main>
-        <section class="chatbox">
-          <div id="chatWindow" class="chat-window">
-            <!-- messages will be appended here via JS -->
+      <main class="main-grid">
+        <aside class="profile-panel">
+          <label for="user-name">Your name</label>
+          <input id="user-name" type="text" placeholder="e.g. Maria" />
+          <p class="small">
+            We store name & conversation locally to keep context.
+          </p>
+
+          <div class="help">
+            <h4>How to use</h4>
+            <ul>
+              <li>
+                Ask about L’Oréal products, shades, routines, or ingredients.
+              </li>
+              <li>Example: "Which L’Oréal serum is best for oily skin?"</li>
+            </ul>
           </div>
 
-          <form id="chatForm" class="chat-form">
-            <label for="userInput" class="visually-hidden">Message</label>
-            <input
-              id="userInput"
-              name="userInput"
-              type="text"
-              placeholder="Ask me about products or routines…"
-              autocomplete="off"
-              required
-            />
-            <button type="submit" id="sendBtn">
-              <span class="material-icons">send</span>
-              <span class="visually-hidden">Send</span>
-            </button>
-          </form>
+          <!-- Theme toggle (insert under the input / help section in profile-panel) -->
+          <div class="theme-toggle-wrapper" style="margin-top: 12px">
+            <label
+              for="theme-toggle"
+              style="display: block; font-weight: 700; margin-bottom: 6px"
+              >Theme</label
+            >
+            <div class="theme-toggle">
+              <input
+                type="checkbox"
+                id="theme-toggle"
+                aria-label="Toggle theme Red or Gold"
+              />
+              <label
+                for="theme-toggle"
+                class="toggle-track"
+                role="switch"
+                aria-checked="false"
+              >
+                <span class="toggle-thumb" aria-hidden="true"></span>
+              </label>
+              <span id="theme-label" style="margin-left: 10px; font-weight: 600"
+                >Red</span
+              >
+            </div>
+            <p class="small" style="margin-top: 8px">
+              Toggle between the L’Oréal red brand and the luxury gold variant.
+              Preference is stored locally.
+            </p>
+          </div>
+        </aside>
+
+        <section class="chatbox">
+          <div id="chat-container" class="chat-container">
+            <div id="chat-messages" class="messages" aria-live="polite"></div>
+
+            <!-- Latest question display (resets each submit) -->
+            <div id="latest-question" class="latest-question" hidden>
+              <div class="label">You asked</div>
+              <div id="latest-question-text" class="latest-question-text"></div>
+            </div>
+
+            <form id="chat-form" class="chat-form" autocomplete="off">
+              <input
+                id="chat-input"
+                type="text"
+                placeholder="Ask about L’Oréal products, routines, shades..."
+                required
+              />
+              <button type="submit" id="send-btn" aria-label="Send message">
+                Send
+              </button>
+            </form>
+          </div>
         </section>
       </main>
 
-      <!------- Footer Links ------->
       <footer class="site-footer">
-        <p>&copy; 2025 Company Name. All rights reserved.</p>
+        <p>&copy; 2025 L’Oréal (prototype). All rights reserved.</p>
         <nav>
-          <!-- These URLs are placeholders -->
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Contact</a>
+          <a href="#" tabindex="0">Privacy</a>
+          <a href="#" tabindex="0">Terms</a>
         </nav>
       </footer>
     </div>
 
-    <!-- secrets.js can be removed when using Cloudflare Workers for API requests -->
-    <script src="secrets.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
