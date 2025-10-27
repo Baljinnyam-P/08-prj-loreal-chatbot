@@ -14,7 +14,19 @@ const themeToggleCheckbox = document.getElementById("theme-toggle");
 const themeLabel = document.getElementById("theme-label");
 
 // System prompt (enforced server-side also)
-const systemPrompt = `You are a helpful L’Oréal beauty assistant. Only answer questions about L’Oréal products, routines, recommendations, ingredients, shades and beauty-related topics. If asked about anything else, politely refuse and remind the user you only answer L’Oréal beauty questions.`;
+const systemPrompt = `
+You are L’Oréal Beauty Assistant — a helpful expert on all things L’Oréal.
+
+Your job:
+- Answer only questions related to L’Oréal products, ingredients, beauty routines, or brand information.
+- If a user asks something unrelated (e.g., about politics, finance, tech, sports, or non-L’Oréal brands), politely refuse and redirect them back to beauty topics.
+
+Refusal style:
+- Stay friendly and brief.
+- Example: “I’m sorry, but I can only answer questions about L’Oréal beauty products and routines.”
+
+Always be accurate, concise, and brand-aligned — informative, elegant, and professional.
+`;
 
 // conversation state
 let messages = [{ role: "system", content: systemPrompt }];
@@ -22,45 +34,6 @@ const STORAGE_KEY = "loreal_chat_messages_v1";
 const NAME_KEY = "loreal_user_name_v1";
 const THEME_KEY = "loreal_theme_v1";
 const MAX_HISTORY = 50;
-
-// Keyword whitelist for a quick client-side filter (helps polite refusal)
-const beautyKeywords = [
-  "l'oreal",
-  "loreal",
-  "l’oréal",
-  "loreal paris",
-  "skin",
-  "hair",
-  "makeup",
-  "foundation",
-  "serum",
-  "moisturizer",
-  "cleanser",
-  "rutine",
-  "routine",
-  "shade",
-  "concealer",
-  "bb cream",
-  "cc cream",
-  "sunscreen",
-  "spf",
-  "shampoo",
-  "conditioner",
-  "color",
-  "haircare",
-  "skincare",
-  "eyeshadow",
-  "mascara",
-  "blush",
-  "fragrance",
-  "perfume",
-  "ingredient",
-  "vitamin c",
-  "retinol",
-  "niacinamide",
-  "salicylic",
-  "hyaluronic",
-];
 
 /* -----------------------
    THEME FUNCTIONS
@@ -216,14 +189,6 @@ chatForm.addEventListener("submit", async (e) => {
 
   showLatestQuestion(text);
   addUser(text);
-
-  if (!isBeautyRelated(text)) {
-    const refusal =
-      "I'm sorry — I only answer questions about L’Oréal products, routines, ingredients, shades, and beauty-related topics. Please ask about L’Oréal beauty products or routines.";
-    addAssistant(refusal);
-    chatInput.value = "";
-    return;
-  }
 
   // temporary thinking bubble
   addAssistant("…thinking…");
